@@ -16,7 +16,9 @@ enum class ESettingsWindowNames
     FileExplorer,
     ShortcutGuide,
     VideoConference,
-    Hosts
+    Hosts,
+    MeasureTool,
+    PowerOCR,
 };
 
 std::string ESettingsWindowNames_to_string(ESettingsWindowNames value);

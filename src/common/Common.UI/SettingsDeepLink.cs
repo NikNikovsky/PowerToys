@@ -24,6 +24,8 @@ namespace Common.UI
             ShortcutGuide,
             VideoConference,
             Hosts,
+            MeasureTool,
+            PowerOCR,
         }
 
         private static string SettingsWindowNameToString(SettingsWindow value)
@@ -56,6 +58,10 @@ namespace Common.UI
                     return "VideoConference";
                 case SettingsWindow.Hosts:
                     return "Hosts";
+                case SettingsWindow.MeasureTool:
+                    return "MeasureTool";
+                case SettingsWindow.PowerOCR:
+                    return "PowerOCR";
                 default:
                     {
                         return string.Empty;
