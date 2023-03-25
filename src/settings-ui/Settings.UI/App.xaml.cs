@@ -12,7 +12,6 @@ using ManagedCommon;
 using Microsoft.PowerToys.Settings.UI.Helpers;
 using Microsoft.PowerToys.Settings.UI.Library;
 using Microsoft.PowerToys.Settings.UI.Library.Telemetry.Events;
-using Microsoft.PowerToys.Settings.UI.Library.Utilities;
 using Microsoft.PowerToys.Settings.UI.Views;
 using Microsoft.PowerToys.Telemetry;
 using Microsoft.UI.Xaml;
@@ -83,7 +82,6 @@ namespace Microsoft.PowerToys.Settings.UI
             if (settingsWindow == null)
             {
                 settingsWindow = new MainWindow(IsDarkTheme());
-                type = typeof(GeneralPage);
             }
 
             settingsWindow.Activate();
@@ -133,30 +131,8 @@ namespace Microsoft.PowerToys.Settings.UI
 
                 if (containsSettingsWindow)
                 {
-                    // open specific window
-                    switch (cmdArgs[currentArgumentIndex])
-                    {
-                        case "Overview": StartupPage = typeof(Views.GeneralPage); break;
-                        case "AlwaysOnTop": StartupPage = typeof(Views.AlwaysOnTopPage); break;
-                        case "Awake": StartupPage = typeof(Views.AwakePage); break;
-                        case "ColorPicker": StartupPage = typeof(Views.ColorPickerPage); break;
-                        case "FancyZones": StartupPage = typeof(Views.FancyZonesPage); break;
-                        case "FileLocksmith": StartupPage = typeof(Views.FileLocksmithPage); break;
-                        case "Run": StartupPage = typeof(Views.PowerLauncherPage); break;
-                        case "ImageResizer": StartupPage = typeof(Views.ImageResizerPage); break;
-                        case "KBM": StartupPage = typeof(Views.KeyboardManagerPage); break;
-                        case "MouseUtils": StartupPage = typeof(Views.MouseUtilsPage); break;
-                        case "PowerRename": StartupPage = typeof(Views.PowerRenamePage); break;
-                        case "QuickAccent": StartupPage = typeof(Views.PowerAccentPage); break;
-                        case "FileExplorer": StartupPage = typeof(Views.PowerPreviewPage); break;
-                        case "ShortcutGuide": StartupPage = typeof(Views.ShortcutGuidePage); break;
-                        case "PowerOCR": StartupPage = typeof(Views.PowerOcrPage); break;
-                        case "VideoConference": StartupPage = typeof(Views.VideoConferencePage); break;
-                        case "MeasureTool": StartupPage = typeof(Views.MeasureToolPage); break;
-                        case "Hosts": StartupPage = typeof(Views.HostsPage); break;
-                        case "PastePlain": StartupPage = typeof(Views.PastePlainPage); break;
-                        default: Debug.Assert(false, "Unexpected SettingsWindow argument value"); break;
-                    }
+                    // Open specific window
+                    StartupPage = GetPage(cmdArgs[currentArgumentIndex]);
 
                     currentArgumentIndex++;
                 }
@@ -367,6 +343,36 @@ namespace Microsoft.PowerToys.Settings.UI
         public static void ClearFlyoutWindow()
         {
             flyoutWindow = null;
+        }
+
+        public static Type GetPage(string settingWindow)
+        {
+            switch (settingWindow)
+            {
+                case "Overview": return typeof(GeneralPage);
+                case "AlwaysOnTop": return typeof(AlwaysOnTopPage);
+                case "Awake": return typeof(AwakePage);
+                case "ColorPicker": return typeof(ColorPickerPage);
+                case "FancyZones": return typeof(FancyZonesPage);
+                case "FileLocksmith": return typeof(FileLocksmithPage);
+                case "Run": return typeof(PowerLauncherPage);
+                case "ImageResizer": return typeof(ImageResizerPage);
+                case "KBM": return typeof(KeyboardManagerPage);
+                case "MouseUtils": return typeof(MouseUtilsPage);
+                case "PowerRename": return typeof(PowerRenamePage);
+                case "QuickAccent": return typeof(PowerAccentPage);
+                case "FileExplorer": return typeof(PowerPreviewPage);
+                case "ShortcutGuide": return typeof(ShortcutGuidePage);
+                case "PowerOCR": return typeof(PowerOcrPage);
+                case "VideoConference": return typeof(VideoConferencePage);
+                case "MeasureTool": return typeof(MeasureToolPage);
+                case "Hosts": return typeof(HostsPage);
+                case "PastePlain": return typeof(PastePlainPage);
+                default:
+                    // Fallback to general
+                    Debug.Assert(false, "Unexpected SettingsWindow argument value");
+                    return typeof(GeneralPage);
+            }
         }
     }
 }
